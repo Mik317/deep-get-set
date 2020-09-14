@@ -27,6 +27,7 @@ function set (obj, path, value) {
     if (deep.p && !hasOwnProp.call(obj, key)) obj[key] = {};
     obj = obj[key];
   }
+  if(keys[i] == '__proto__' || keys[i] == 'prototype' || keys[i] == 'constructor') return value
   obj[keys[i]] = value;
   return value;
 }
