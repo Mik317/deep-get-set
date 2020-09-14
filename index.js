@@ -9,6 +9,7 @@ function deep (obj, path, value) {
 
 function get (obj, path) {
   var keys = Array.isArray(path) ? path : path.split('.');
+  if(keys.includes('__proto__') || keys.includes('prototype') || keys.includes('constructor')) return obj
   for (var i = 0; i < keys.length; i++) {
     var key = keys[i];
     if (!obj || !hasOwnProp.call(obj, key)) {
@@ -22,12 +23,12 @@ function get (obj, path) {
 
 function set (obj, path, value) {
   var keys = Array.isArray(path) ? path : path.split('.');
+  if(keys.includes('__proto__') || keys.includes('prototype') || keys.includes('constructor')) return value
   for (var i = 0; i < keys.length - 1; i++) {
     var key = keys[i];
     if (deep.p && !hasOwnProp.call(obj, key)) obj[key] = {};
     obj = obj[key];
   }
-  if(keys[i] == '__proto__' || keys[i] == 'prototype' || keys[i] == 'constructor') return value
   obj[keys[i]] = value;
   return value;
 }
